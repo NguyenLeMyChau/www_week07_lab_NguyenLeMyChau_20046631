@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<style>
+    div.inline {
+        color: black;
+        float: none;
+        padding: 5px 5px;
+        display: inline-block;
+    }
+    div.inline a.active {
+        background-color: #FBD603;
+        border:1px solid darkred;
+    }
+
+    .fieldset {
+        width: 95%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(20%, 1fr)); /* Tự động tính toán chiều rộng */
+        gap: 50px; /* Khoảng cách giữa các phần tử */
+    }
+
+    img{
+        width: 248px;
+        height: 200px;
+        margin-bottom: 10px;
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>products with pagination</title>
+    <meta charset="UTF-8">
+    <title>products</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid" style="flex-direction: row; display: flex">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MyChau</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Product</a></li>
+            <li><a href="http://localhost:8080/cart">Cart</a></li>
+            <li><a href="#">Order</a></li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto" style="margin-left: 800px">
+            <li>
+                <a href="http://localhost:8080/login">
+                    <span class="glyphicon glyphicon-user">
+                        &nbsp;<span th:text="${customer.name}"></span>
+                    </span>
+                </a>
+            </li>
+
+
+            <li><a href="http://localhost:8080/logout"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<h1 class="text-center">LIST OF PRODUCTS</h1><br>
+
+<div class="fieldset">
+
+    <fieldset th:each="product:${products}" class="text-center" style="width: 250px; height: 350px; border: 1px solid;margin-left: 70px">
+        <img th:src="@{${product.getProductImageList()[0].path}}" alt="">
+        <p th:text="${product.name}" style="font-size: 20px; font-weight: bolder;"></p>
+        <p th:text="${product.getProductPrices()[0].price}" style="font-size: 18px; font-weight: normal; color: red"></p>
+        <a class="btn btn-primary" th:href="@{buy/{id}(id=${product.product_id})}">Add to cart</a>
+    </fieldset>
+</div>
+
+</body>
+</html>
